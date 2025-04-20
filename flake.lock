@@ -202,6 +202,24 @@
         "type": "github"
       }
     },
+    "nix-gitlab-ci": {
+      "locked": {
+        "dir": "lib",
+        "lastModified": 1743798155,
+        "narHash": "sha256-R2n1ZpdubTzNIy41iHeuHY9ocroUDHegQtC3vN/3sUw=",
+        "owner": "technofab",
+        "repo": "nix-gitlab-ci",
+        "rev": "b193df30f4a61532f4a056cd759263f2ce453ead",
+        "type": "gitlab"
+      },
+      "original": {
+        "dir": "lib",
+        "owner": "technofab",
+        "ref": "feat/v2",
+        "repo": "nix-gitlab-ci",
+        "type": "gitlab"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1733212471,
@@ -301,6 +319,7 @@
       "inputs": {
         "devenv": "devenv",
         "flake-parts": "flake-parts_2",
+        "nix-gitlab-ci": "nix-gitlab-ci",
         "nixpkgs": "nixpkgs_4",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"

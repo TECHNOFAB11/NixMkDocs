@@ -8,6 +8,7 @@
       imports = [
         inputs.devenv.flakeModule
         inputs.treefmt-nix.flakeModule
+        inputs.nix-gitlab-ci.flakeModule
         ./lib/flakeModule.nix
       ];
       systems = import systems;
@@ -44,6 +45,34 @@
         docs."test" = {
           path = ./docs;
         };
+        ci = {
+          stages = ["build" "deploy"];
+          jobs = {
+            "docs" = {
+              stage = "build";
+              script = [
+                # sh
+                ''
+                  nix build .#docs:default
+                  mkdir -p public
+                  cp -r result/ public/
+                ''
+              ];
+              artifacts.paths = ["public"];
+            };
+            "pages" = {
+              image = "alpine:latest";
+              stage = "deploy";
+              script = ["true"];
+              artifacts.paths = ["public"];
+              rules = [
+                {
+                  "if" = "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH";
+                }
+              ];
+            };
+          };
+        };
       };
     };
 
@@ -55,6 +84,7 @@
     systems.url = "github:nix-systems/default-linux";
     devenv.url = "github:cachix/devenv";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    nix-gitlab-ci.url = "gitlab:technofab/nix-gitlab-ci/feat/v2?dir=lib";
   };
 
   nixConfig = {
