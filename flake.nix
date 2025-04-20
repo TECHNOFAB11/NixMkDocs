@@ -61,6 +61,7 @@
               artifacts.paths = ["public"];
             };
             "pages" = {
+              nix.enable = false;
               image = "alpine:latest";
               stage = "deploy";
               script = ["true"];
