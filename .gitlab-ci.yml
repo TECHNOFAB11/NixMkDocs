@@ -1,4 +1,4 @@
 include:
   - component: gitlab.com/TECHNOFAB/nix-gitlab-ci/nix-gitlab-ci@feat/v2
     inputs:
-      version: feat/v2
+      version: feat-v2
