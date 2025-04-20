@@ -55,7 +55,7 @@
                 ''
                   nix build .#docs:default
                   mkdir -p public
-                  cp -r result/ public/
+                  cp -r result/. public/
                 ''
               ];
               artifacts.paths = ["public"];
