@@ -169,6 +169,21 @@
         "type": "github"
       }
     },
+    "mkdocs-material-umami": {
+      "locked": {
+        "lastModified": 1745163020,
+        "narHash": "sha256-eYKx9b50bRbTHSbGusEB3HECJwZvLshW1SavFkN0foE=",
+        "owner": "technofab",
+        "repo": "mkdocs-material-umami",
+        "rev": "e09ad45e921b8c1a30a47d599dcb8e8cb4468200",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "technofab",
+        "repo": "mkdocs-material-umami",
+        "type": "gitlab"
+      }
+    },
     "nix": {
       "inputs": {
         "flake-compat": [
@@ -319,6 +334,7 @@
       "inputs": {
         "devenv": "devenv",
         "flake-parts": "flake-parts_2",
+        "mkdocs-material-umami": "mkdocs-material-umami",
         "nix-gitlab-ci": "nix-gitlab-ci",
         "nixpkgs": "nixpkgs_4",
         "systems": "systems",

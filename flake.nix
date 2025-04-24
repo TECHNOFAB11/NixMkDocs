@@ -36,10 +36,81 @@
         };
         doc = {
           path = ./docs;
-          deps = pp: [pp.mkdocs-material];
+          deps = pp: [pp.mkdocs-material (pp.callPackage inputs.mkdocs-material-umami {})];
           config = {
-            site_name = "Site Name";
-            theme.name = "material";
+            site_name = "NixMkDocs";
+            repo_name = "TECHNOFAB/nixmkdocs";
+            repo_url = "https://gitlab.com/TECHNOFAB/nixmkdocs";
+            theme = {
+              name = "material";
+              features = ["content.code.copy"];
+              logo = "images/logo.png";
+              icon.repo = "simple/gitlab";
+              favicon = "images/favicon.png";
+              palette = [
+                {
+                  scheme = "default";
+                  media = "(prefers-color-scheme: light)";
+                  primary = "indigo";
+                  accent = "blue";
+                  toggle = {
+                    icon = "material/brightness-7";
+                    name = "Switch to dark mode";
+                  };
+                }
+                {
+                  scheme = "slate";
+                  media = "(prefers-color-scheme: dark)";
+                  primary = "indigo";
+                  accent = "blue";
+                  toggle = {
+                    icon = "material/brightness-4";
+                    name = "Switch to light mode";
+                  };
+                }
+              ];
+            };
+            plugins = ["search" "material-umami"];
+            nav = let
+              mkNav = name: file: {${name} = file;};
+            in [
+              (mkNav "Introduction" "index.md")
+              (mkNav "Getting Started" "getting-started.md")
+              (mkNav "Configuration" "configuration.md")
+              (mkNav "Packages" "packages.md")
+              (mkNav "Examples" "examples.md")
+            ];
+            markdown_extensions = [
+              {
+                "pymdownx.highlight".pygments_lang_class = true;
+              }
+              "pymdownx.inlinehilite"
+              "pymdownx.snippets"
+              "pymdownx.superfences"
+              "fenced_code"
+            ];
+            extra.analytics = {
+              provider = "umami";
+              site_id = "57d2c8d2-45c7-4a84-9e72-313f2819e34c";
+              src = "https://analytics.tf/umami";
+              feedback = {
+                title = "Was this page helpful?";
+                ratings = [
+                  {
+                    icon = "material/thumb-up-outline";
+                    name = "This page is helpful";
+                    data = "good";
+                    note = "Thanks for your feedback!";
+                  }
+                  {
+                    icon = "material/thumb-down-outline";
+                    name = "This page could be improved";
+                    data = "bad";
+                    note = "Thanks for your feedback!";
+                  }
+                ];
+              };
+            };
           };
         };
         docs."test" = {
@@ -86,6 +157,7 @@
     devenv.url = "github:cachix/devenv";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     nix-gitlab-ci.url = "gitlab:technofab/nix-gitlab-ci/feat/v2?dir=lib";
+    mkdocs-material-umami.url = "gitlab:technofab/mkdocs-material-umami";
   };
 
   nixConfig = {
