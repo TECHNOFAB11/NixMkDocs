@@ -71,14 +71,12 @@
               ];
             };
             plugins = ["search" "material-umami"];
-            nav = let
-              mkNav = name: file: {${name} = file;};
-            in [
-              (mkNav "Introduction" "index.md")
-              (mkNav "Getting Started" "getting-started.md")
-              (mkNav "Configuration" "configuration.md")
-              (mkNav "Packages" "packages.md")
-              (mkNav "Examples" "examples.md")
+            nav = [
+              {"Introduction" = "index.md";}
+              {"Getting Started" = "getting-started.md";}
+              {"Configuration" = "configuration.md";}
+              {"Packages" = "packages.md";}
+              {"Examples" = "examples.md";}
             ];
             markdown_extensions = [
               {
@@ -93,6 +91,7 @@
               provider = "umami";
               site_id = "57d2c8d2-45c7-4a84-9e72-313f2819e34c";
               src = "https://analytics.tf/umami";
+              domains = "nix-mkdocs.projects.tf";
               feedback = {
                 title = "Was this page helpful?";
                 ratings = [
