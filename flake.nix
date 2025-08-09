@@ -14,8 +14,10 @@
       systems = import systems;
       flake = {};
       perSystem = {
+        lib,
         pkgs,
         config,
+        self',
         ...
       }: {
         treefmt = {
@@ -36,7 +38,7 @@
         };
         doc = {
           path = ./docs;
-          deps = pp: [pp.mkdocs-material (pp.callPackage inputs.mkdocs-material-umami {})];
+          deps = pp: [pp.mkdocs-material pp.mkdocs-macros (pp.callPackage inputs.mkdocs-material-umami {})];
           config = {
             site_name = "NixMkDocs";
             repo_name = "TECHNOFAB/nixmkdocs";
@@ -70,13 +72,22 @@
                 }
               ];
             };
-            plugins = ["search" "material-umami"];
+            plugins = [
+              "search"
+              "material-umami"
+              {
+                macros = {
+                  include_dir = self'.packages.optionsDocs;
+                };
+              }
+            ];
             nav = [
               {"Introduction" = "index.md";}
               {"Getting Started" = "getting-started.md";}
               {"Configuration" = "configuration.md";}
               {"Packages" = "packages.md";}
               {"Examples" = "examples.md";}
+              {"Options" = "options.md";}
             ];
             markdown_extensions = [
               {
@@ -85,6 +96,7 @@
               "pymdownx.inlinehilite"
               "pymdownx.snippets"
               "pymdownx.superfences"
+              "pymdownx.escapeall"
               "fenced_code"
             ];
             extra.analytics = {
@@ -116,8 +128,19 @@
           path = ./docs;
         };
         ci = {
-          stages = ["build" "deploy"];
+          stages = ["test" "build" "deploy"];
           jobs = {
+            "test" = {
+              stage = "test";
+              script = [
+                "nix run .#tests -- --junit=junit.xml"
+              ];
+              allow_failure = true;
+              artifacts = {
+                when = "always";
+                reports.junit = "junit.xml";
+              };
+            };
             "docs" = {
               stage = "build";
               script = [
@@ -144,6 +167,40 @@
             };
           };
         };
+
+        packages = let
+          doclib = import ./lib {inherit lib pkgs;};
+          ntlib = inputs.nixtest.lib {inherit lib pkgs;};
+          roots = [
+            {
+              url = "https://gitlab.com/TECHNOFAB/nixmkdocs/-/blob/main/lib";
+              path = toString ./lib;
+            }
+          ];
+        in
+          rec {
+            optionsDoc = doclib.mkOptionDocs {
+              module = doclib.modules.nixMkDocsSubmodule;
+              inherit roots;
+            };
+            optionsDocs = pkgs.runCommand "options-docs" {} ''
+              mkdir -p $out
+              ln -s ${optionsDoc} $out/options.md
+            '';
+            tests = ntlib.mkNixtest {
+              modules = ntlib.autodiscover {dir = ./tests;};
+              args = {
+                inherit pkgs doclib ntlib self';
+              };
+            };
+          }
+          // (doclib.mkDocs {
+            docs."example" = {
+              path = ./docs;
+              config = {};
+            };
+          })
+          .packages;
       };
     };
 
@@ -155,8 +212,9 @@
     systems.url = "github:nix-systems/default-linux";
     devenv.url = "github:cachix/devenv";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    nix-gitlab-ci.url = "gitlab:technofab/nix-gitlab-ci/feat/v2?dir=lib";
+    nix-gitlab-ci.url = "gitlab:technofab/nix-gitlab-ci/2.1.0?dir=lib";
     mkdocs-material-umami.url = "gitlab:technofab/mkdocs-material-umami";
+    nixtest.url = "gitlab:technofab/nixtest?dir=lib";
   };
 
   nixConfig = {
