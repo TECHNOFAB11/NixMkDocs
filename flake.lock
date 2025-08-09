@@ -220,17 +220,17 @@
     "nix-gitlab-ci": {
       "locked": {
         "dir": "lib",
-        "lastModified": 1743798155,
-        "narHash": "sha256-R2n1ZpdubTzNIy41iHeuHY9ocroUDHegQtC3vN/3sUw=",
+        "lastModified": 1749124633,
+        "narHash": "sha256-vgYHrbAFRfgNYysW74Eam/S7KruYWMLCHG4U32xgHKY=",
         "owner": "technofab",
         "repo": "nix-gitlab-ci",
-        "rev": "b193df30f4a61532f4a056cd759263f2ce453ead",
+        "rev": "f121b10dc9a7417906a886154e3065410a72462d",
         "type": "gitlab"
       },
       "original": {
         "dir": "lib",
         "owner": "technofab",
-        "ref": "feat/v2",
+        "ref": "2.1.0",
         "repo": "nix-gitlab-ci",
         "type": "gitlab"
       }
@@ -300,11 +300,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1743814133,
-        "narHash": "sha256-drDyYyUmjeYGiHmwB9eOPTQRjmrq3Yz26knwmMPLZFk=",
+        "lastModified": 1754651824,
+        "narHash": "sha256-aB7ft6njy9EJfuW+rdToNChfRrHNRw/yTg5cSEnG+HI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "250b695f41e0e2f5afbf15c6b12480de1fe0001b",
+        "rev": "b069b7c1e2fe1a3a24221428558bf44128d3d5c8",
         "type": "github"
       },
       "original": {
@@ -330,6 +330,23 @@
         "type": "github"
       }
     },
+    "nixtest": {
+      "locked": {
+        "dir": "lib",
+        "lastModified": 1753957623,
+        "narHash": "sha256-kdImwKx57N0QL8HPUUb5ADwXFgSjaNOk39b/eKlzyTo=",
+        "owner": "technofab",
+        "repo": "nixtest",
+        "rev": "22b43c9fe83be73c3f0648bbb54bc3c1cf7f96df",
+        "type": "gitlab"
+      },
+      "original": {
+        "dir": "lib",
+        "owner": "technofab",
+        "repo": "nixtest",
+        "type": "gitlab"
+      }
+    },
     "root": {
       "inputs": {
         "devenv": "devenv",
@@ -337,6 +354,7 @@
         "mkdocs-material-umami": "mkdocs-material-umami",
         "nix-gitlab-ci": "nix-gitlab-ci",
         "nixpkgs": "nixpkgs_4",
+        "nixtest": "nixtest",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
       }
