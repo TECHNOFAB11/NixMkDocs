@@ -83,7 +83,7 @@
       ${opt.type}
       ```
     ''
-    + (optionalString (opt ? default && opt.default != null) ''
+    + (optionalString (opt ? default && opt.default != null && opt.default.text != "") ''
 
       **Default value**:
 
