@@ -2,13 +2,14 @@
 
 Here are some examples demonstrating how to configure your documentation sites using NixMkDocs.
 
-## Basic Usage with `doc`
+## Basic Usage
 
-This example shows how to configure a single documentation site using the `doc` option, which is a shorthand for `docs."default"`.
+This example shows how to configure a single documentation site:
 
 ```nix
 # in your perSystem config in flake.nix:
-doc = {
+#                .- required because the module system otherwises confuses it with the "config" below
+docs."default".config = {
   path = ./docs; # Path to your documentation source files (e.g., your markdown files)
   deps = pp: [
     pp.mkdocs-material # Add the mkdocs-material theme as a dependency
@@ -34,7 +35,7 @@ doc = {
 
 This configuration will create packages named `docs:default` and `docs:default:watch`.
 
-## Usage with `docs` for multiple sites
+## Usage for multiple sites
 
 This example shows how to configure multiple distinct documentation sites within the same project using the `docs` option.
 
@@ -80,33 +81,6 @@ This configuration will create packages for each defined documentation set:
 - `docs:api-docs` and `docs:api-docs:watch`
 - `docs:default` and `docs:default:watch`
 
-## Combining `doc` and `docs` (with caution)
+## More examples
 
-You technically can use both `doc` and `docs` in your configuration. However, as mentioned in the [Configuration section](https://www.google.com/search?q=configuration.md), the `doc` option is just a shorthand for `docs."default"`. If you define both, the configuration specified under `docs."default"` will overwrite the configuration under `doc`, and a warning will be printed during evaluation.
-
-It is generally recommended to choose one approach:
-
-- Use `doc` if you *only* have a single documentation site and don't plan to add more named sites later.
-- Use `docs` (and potentially define a `"default"` entry within it) if you have, or anticipate having, multiple documentation sites.
-
-```nix
-# in your perSystem config in flake.nix:
-# NOTE: This configuration will cause docs."default" to overwrite doc
-doc = {
-  path = ./docs-legacy;
-  config.site_name = "Legacy Docs (Will be overwritten)";
-};
-
-docs = {
-  "default" = { # This configuration will be used for docs:default
-    path = ./docs-new;
-    config.site_name = "New Default Docs";
-  };
-  "another-set" = {
-    path = ./docs-another;
-    config.site_name = "Another Docs Set";
-  };
-};
-```
-
-In this scenario, the `docs:default` and `docs:default:watch` packages will be built using the configuration from `docs."default"` (path `./docs-new`, site name "New Default Docs"). The `docs:another-set` and `docs:another-set:watch` packages will use the configuration from `docs."another-set"`. The configuration provided under `doc` will be ignored for the `"default"` site.
+See this project's flake for usage of modules for example.

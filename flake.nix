@@ -67,7 +67,6 @@
             nav = [
               {"Introduction" = "index.md";}
               {"Getting Started" = "getting-started.md";}
-              {"Configuration" = "configuration.md";}
               {"Packages" = "packages.md";}
               {"Examples" = "examples.md";}
               {"Options" = "options.md";}

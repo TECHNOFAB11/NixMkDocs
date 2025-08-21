@@ -33,4 +33,4 @@ outputs = { flake-parts, ... }@inputs:
    }: # etc.
 ```
 
-Once you have included and applied the module, you can configure your documentation sites using the options described in the [Configuration section](configuration.md).
+Once you have included and applied the module, you can configure your documentation sites using the options described in the [Options section](options.md).
