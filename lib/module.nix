@@ -8,6 +8,7 @@
     mkOption
     types
     literalExpression
+    recursiveUpdate
     concatMapAttrs
     removePrefix
     assertMsg
@@ -19,6 +20,7 @@ in rec {
     ...
   }: {
     _file = ./module.nix;
+    imports = [extraModules];
     options = {
       path = mkOption {
         type = types.either types.str types.path;
@@ -41,7 +43,27 @@ in rec {
         description = "Dependencies needed to build the docs";
       };
       config = mkOption {
-        type = types.attrs;
+        type = let
+          # from https://discourse.nixos.org/t/nix-function-to-merge-attributes-records-recursively-and-concatenate-arrays/2030/9
+          deepMerge = lhs: rhs:
+            lhs
+            // rhs
+            // (builtins.mapAttrs (
+                rName: rValue: let
+                  lValue = lhs.${rName} or null;
+                in
+                  if builtins.isAttrs lValue && builtins.isAttrs rValue
+                  then deepMerge lValue rValue
+                  else if builtins.isList lValue && builtins.isList rValue
+                  then lValue ++ rValue
+                  else rValue
+              )
+              rhs);
+        in
+          types.attrs
+          // {
+            merge = loc: defs: lib.foldl' deepMerge {} (map (def: def.value) defs);
+          };
         default = {};
         description = "Configuration which gets passed to mkdocs";
       };
@@ -123,4 +145,6 @@ in rec {
         config.docs;
     };
   };
+
+  extraModules = ./modules;
 }

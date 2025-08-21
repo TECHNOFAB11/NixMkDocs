@@ -13,7 +13,7 @@
           doc = doclib.mkDocs {
             docs."test" = {
               path = ./fixtures/simple;
-              config = {};
+              config.theme = "mkdocs";
             };
           };
           build = doc.packages."docs:test";

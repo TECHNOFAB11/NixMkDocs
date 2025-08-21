@@ -36,51 +36,34 @@
             packageOverrides.treefmt = config.treefmt.build.wrapper;
           };
         };
-        doc = {
+        docs."default".config = {
           path = ./docs;
-          deps = pp: [pp.mkdocs-material pp.mkdocs-macros (pp.callPackage inputs.mkdocs-material-umami {})];
+          material = {
+            enable = true;
+            colors = {
+              primary = "indigo";
+              accent = "blue";
+            };
+            umami = {
+              enable = true;
+              src = "https://analytics.tf/umami";
+              siteId = "57d2c8d2-45c7-4a84-9e72-313f2819e34c";
+              domains = ["nix-mkdocs.projects.tf"];
+            };
+          };
+          macros = {
+            enable = true;
+            includeDir = toString self'.packages.optionsDocs;
+          };
           config = {
             site_name = "NixMkDocs";
             repo_name = "TECHNOFAB/nixmkdocs";
             repo_url = "https://gitlab.com/TECHNOFAB/nixmkdocs";
             theme = {
-              name = "material";
-              features = ["content.code.copy"];
               logo = "images/logo.png";
               icon.repo = "simple/gitlab";
               favicon = "images/favicon.png";
-              palette = [
-                {
-                  scheme = "default";
-                  media = "(prefers-color-scheme: light)";
-                  primary = "indigo";
-                  accent = "blue";
-                  toggle = {
-                    icon = "material/brightness-7";
-                    name = "Switch to dark mode";
-                  };
-                }
-                {
-                  scheme = "slate";
-                  media = "(prefers-color-scheme: dark)";
-                  primary = "indigo";
-                  accent = "blue";
-                  toggle = {
-                    icon = "material/brightness-4";
-                    name = "Switch to light mode";
-                  };
-                }
-              ];
             };
-            plugins = [
-              "search"
-              "material-umami"
-              {
-                macros = {
-                  include_dir = self'.packages.optionsDocs;
-                };
-              }
-            ];
             nav = [
               {"Introduction" = "index.md";}
               {"Getting Started" = "getting-started.md";}
@@ -99,29 +82,6 @@
               "pymdownx.escapeall"
               "fenced_code"
             ];
-            extra.analytics = {
-              provider = "umami";
-              site_id = "57d2c8d2-45c7-4a84-9e72-313f2819e34c";
-              src = "https://analytics.tf/umami";
-              domains = "nix-mkdocs.projects.tf";
-              feedback = {
-                title = "Was this page helpful?";
-                ratings = [
-                  {
-                    icon = "material/thumb-up-outline";
-                    name = "This page is helpful";
-                    data = "good";
-                    note = "Thanks for your feedback!";
-                  }
-                  {
-                    icon = "material/thumb-down-outline";
-                    name = "This page could be improved";
-                    data = "bad";
-                    note = "Thanks for your feedback!";
-                  }
-                ];
-              };
-            };
           };
         };
         docs."test" = {
