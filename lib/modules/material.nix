@@ -27,11 +27,15 @@ in {
   };
 
   config.deps = p: optional (cfg.enable) p.mkdocs-material;
+  config.config.edit_uri =
+    if (cfg.enable)
+    then "edit/${config.editBranch}${config.relPath}"
+    else null;
   config.config.theme =
     if (cfg.enable)
     then {
       name = "material";
-      features = ["content.code.copy"];
+      features = ["content.code.copy" "content.action.edit"];
       palette = [
         {
           inherit (cfg.colors) primary accent;

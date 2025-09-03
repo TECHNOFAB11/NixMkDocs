@@ -8,7 +8,6 @@
     mkOption
     types
     literalExpression
-    recursiveUpdate
     concatMapAttrs
     removePrefix
     assertMsg
@@ -69,6 +68,10 @@ in rec {
       };
 
       # internal
+      relPath = mkOption {
+        internal = true;
+        type = types.str;
+      };
       finalConfig = mkOption {
         internal = true;
         type = types.attrs;
@@ -88,8 +91,8 @@ in rec {
     };
     config = let
       deps = pkgs.python3.withPackages config.deps;
+    in rec {
       relPath = removePrefix (config.base) (config.path);
-    in {
       finalConfig = assert assertMsg (config.path != "") "'path' for documentation entry '${name}' is unset";
         {
           docs_dir = config.path;
