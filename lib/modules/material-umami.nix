@@ -67,7 +67,7 @@ in {
   };
 
   config.deps = p: optional (cfg.enable) (p.callPackage package {});
-  config.config.theme =
+  config.config =
     if (cfg.enable)
     then {
       plugins = ["material-umami"];
