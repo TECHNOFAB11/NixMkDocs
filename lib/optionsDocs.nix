@@ -110,10 +110,12 @@
     + "\n";
 
   opts = mapAttrsToList (name: opt:
-    optToMd (opt
-      // {
-        inherit name;
-      }))
+    builtins.addErrorContext "while generating markdown for option ${name}" (
+      optToMd (opt
+        // {
+          inherit name;
+        })
+    ))
   optionsDoc.optionsNix;
   markdown = concatStringsSep "\n" opts;
 in
