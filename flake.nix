@@ -55,6 +55,13 @@
             enable = true;
             includeDir = toString self'.packages.optionsDocs;
           };
+          dynamic-nav = {
+            enable = true;
+            files."Example Section" = [
+              {"Look im below E!" = builtins.toFile "test.md" "This is generated from Nix and the order works!";}
+              {"Example Entry" = builtins.toFile "test.md" "Hello from Nix!";}
+            ];
+          };
           config = {
             site_name = "NixMkDocs";
             repo_name = "TECHNOFAB/nixmkdocs";
