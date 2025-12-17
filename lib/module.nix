@@ -24,7 +24,6 @@ in rec {
       path = mkOption {
         type = types.either types.str types.path;
         default = "";
-        apply = toString;
         description = ''
           Path to the docs.
         '';
@@ -98,7 +97,7 @@ in rec {
     config = let
       deps = pkgs.python3.withPackages config.deps;
     in rec {
-      relPath = removePrefix config.base config.path;
+      relPath = removePrefix config.base (builtins.toString config.path);
       finalConfig = assert assertMsg (config.path != "") "'path' for documentation entry '${name}' is unset";
         {
           docs_dir = config.path;
