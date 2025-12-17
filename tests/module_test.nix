@@ -1,4 +1,5 @@
 {
+  pkgs,
   doclib,
   ntlib,
   ...
@@ -22,6 +23,7 @@
           # sh
           ''
             ${ntlib.helpers.scriptHelpers}
+            ${ntlib.helpers.path (with pkgs; [gnugrep])}
             # building
             assert "-f ${build}/sitemap.xml" "sitemap should exist"
             assert "-f ${build}/index.html" "index.html should exist"

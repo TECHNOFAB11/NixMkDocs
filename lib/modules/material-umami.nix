@@ -66,18 +66,18 @@ in {
     };
   };
 
-  config.deps = p: optional (cfg.enable) (p.callPackage package {});
+  config.deps = p: optional cfg.enable (p.callPackage package {});
   config.config =
-    if (cfg.enable)
+    if cfg.enable
     then {
       plugins = ["material-umami"];
       extra.analytics = {
         provider = "umami";
         site_id = cfg.siteId;
-        src = cfg.src;
+        inherit (cfg) src;
         domains = builtins.concatStringsSep "," cfg.domains;
         feedback =
-          if (cfg.enableFeedback)
+          if cfg.enableFeedback
           then {
             title = "Was this page helpful?";
             ratings = [

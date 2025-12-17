@@ -9,7 +9,7 @@ Let's assume your documentation site is named `<name>`.
 - **Type:** `derivation`
 - **Description:** This package is a Nix derivation that builds the static HTML documentation site using the `mkdocs build` command. The output of this derivation is the fully built website, ready for deployment.
 - **Usage:** You can build this package using `nix build .#docs:<name>` from the root of your project flake. Replace `<name>` with the actual name of your documentation site (e.g., `nix build .#docs:default`, `nix build .#docs:user-guide`).
-  After a successful build, the generated documentation site will be available in the `result/` directory symlinked in your project root.
+    After a successful build, the generated documentation site will be available in the `result/` directory symlinked in your project root.
 
 ## `docs:<name>:watch`
 

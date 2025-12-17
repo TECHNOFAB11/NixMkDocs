@@ -1,7 +1,7 @@
 {
   description = "NixMkDocs lib";
 
-  outputs = {...}: {
+  outputs = _: {
     lib = import ./.;
     flakeModule = ./flakeModule.nix;
   };

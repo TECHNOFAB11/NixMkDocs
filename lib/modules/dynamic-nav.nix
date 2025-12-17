@@ -15,7 +15,7 @@
   }:
     buildPythonPackage {
       pname = "mkdocs-dynamic-nav";
-      version = "0.1.0";
+      version = "unstablee";
       pyproject = true;
 
       src = fetchFromGitLab {
@@ -46,9 +46,9 @@ in {
       '';
     };
   };
-  config.deps = p: optional (cfg.enable) (p.callPackage package {});
+  config.deps = p: optional cfg.enable (p.callPackage package {});
   config.config =
-    if (cfg.enable)
+    if cfg.enable
     then {
       plugins = [
         {
