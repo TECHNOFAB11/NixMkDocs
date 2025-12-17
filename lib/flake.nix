@@ -3,6 +3,6 @@
 
   outputs = {...}: {
     lib = import ./.;
-    flakeModule = import ./flakeModule.nix;
+    flakeModule = ./flakeModule.nix;
   };
 }

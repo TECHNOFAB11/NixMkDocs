@@ -7,7 +7,7 @@
   cfg = config.macros;
 in {
   options.macros = {
-    enable = mkEnableOption "mkdocs-macros";
+    enable = mkEnableOption "[mkdocs-macros](https://github.com/fralau/mkdocs-macros-plugin)";
     includeDir = mkOption {
       type = types.nullOr types.str;
       default = null;

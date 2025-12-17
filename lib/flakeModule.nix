@@ -23,23 +23,12 @@
               }
             ];
           });
-          description = '''';
+          description = ''
+            Define your docs sites here.
+          '';
           default = {};
         };
-        # WARN: see below
-        # doc = mkOption {
-        #   type = types.submodule doclib.modules.docsSubmodule;
-        #   description = ''
-        #     Note: this is a shorthand for writing `docs."default"`
-        #   '';
-        #   default = {};
-        # };
       };
-
-      # WARN: janky af, removed for now, just not worth it
-      #   details: with the modules, mkDefault basically results in any user config
-      #            being "default" and thus overriden by the modules
-      # config.docs."default".config = mkDefault config.doc;
 
       config.legacyPackages =
         concatMapAttrs (n: v: {

@@ -14,7 +14,7 @@
     mkdocs-material,
   }:
     buildPythonPackage {
-      pname = "mkdocs-material-umami";
+      pname = "[mkdocs-material-umami](https://gitlab.com/TECHNOFAB/mkdocs-material-umami)";
       version = "0.1.0";
       pyproject = true;
 

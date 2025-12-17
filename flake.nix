@@ -57,19 +57,21 @@
           };
           dynamic-nav = {
             enable = true;
-            files."Example Section" = [
-              {"Look im below E!" = builtins.toFile "test.md" "This is generated from Nix and the order works!";}
+            files."Dynamic Nav Plugin" = [
+              {"Look im above E!" = builtins.toFile "test.md" "This is generated from Nix and its not sorted alphabetically in the nav!";}
               {"Example Entry" = builtins.toFile "test.md" "Hello from Nix!";}
             ];
           };
           config = {
             site_name = "NixMkDocs";
+            site_url = "https://nix-mkdocs.projects.tf";
             repo_name = "TECHNOFAB/nixmkdocs";
             repo_url = "https://gitlab.com/TECHNOFAB/nixmkdocs";
+            extra_css = ["style.css"];
             theme = {
-              logo = "images/logo.png";
+              logo = "images/logo.svg";
               icon.repo = "simple/gitlab";
-              favicon = "images/favicon.png";
+              favicon = "images/logo.svg";
             };
             nav = [
               {"Introduction" = "index.md";}

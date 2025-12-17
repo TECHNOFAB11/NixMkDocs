@@ -21,8 +21,8 @@
       src = fetchFromGitLab {
         owner = "TECHNOFAB";
         repo = "mkdocs-dynamic-nav";
-        rev = "1907f85b90d8cf379f6b2990966cb42201a8bd90";
-        hash = "sha256-iEf5qwe8Qu2zW9nvQaHfYw+pWlwDMLOTfKhNGgm7tSU=";
+        rev = "b52fc5dffeb360b509eaec2b822f406fcdf7fd8f";
+        hash = "sha256-6WE+qKQxDA2DeGUstPtQ5mOFURUHxU3YWlsd2YAv8mA=";
       };
       nativeBuildInputs = [setuptools];
 
@@ -33,7 +33,7 @@
     };
 in {
   options.dynamic-nav = {
-    enable = mkEnableOption "mkdocs-dynamic-nav";
+    enable = mkEnableOption "[mkdocs-dynamic-nav](https://gitlab.com/TECHNOFAB/mkdocs-dynamic-nav)";
     files = mkOption {
       type = types.either (types.attrsOf types.anything) (types.listOf types.anything);
       default = {};
@@ -42,6 +42,7 @@ in {
       };
       description = ''
         Mapping of nav-titles to files or nested mappings.
+        Use a list to preserve ordering, when using a dict/attrset it will be sorted alphabetically.
       '';
     };
   };

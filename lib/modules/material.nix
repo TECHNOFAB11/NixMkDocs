@@ -7,7 +7,7 @@
   cfg = config.material;
 in {
   options.material = {
-    enable = mkEnableOption "mkdocs-material";
+    enable = mkEnableOption "[mkdocs-material](https://github.com/squidfunk/mkdocs-material)";
     colors = {
       primary = mkOption {
         type = types.str;

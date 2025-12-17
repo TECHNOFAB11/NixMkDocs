@@ -25,21 +25,25 @@ in rec {
         type = types.either types.str types.path;
         default = "";
         apply = op: toString op;
-        description = "Path to the docs";
+        description = ''
+          Path to the docs.
+        '';
       };
       base = mkOption {
         type = types.either types.str types.path;
         default = "";
         apply = op: toString op;
         description = ''
-          Base path of the repo (parent dir of the dir specified in `path`)
+          Base path of the repo (parent dir of the dir specified in `path`).
         '';
       };
       deps = mkOption {
         type = types.functionTo (types.listOf types.package);
         default = p: [];
         defaultText = literalExpression "p: []";
-        description = "Dependencies needed to build the docs";
+        description = ''
+          Dependencies needed to build the docs.
+        '';
       };
       config = mkOption {
         type = let
@@ -64,7 +68,9 @@ in rec {
             merge = loc: defs: lib.foldl' deepMerge {} (map (def: def.value) defs);
           };
         default = {};
-        description = "Configuration which gets passed to mkdocs";
+        description = ''
+          Configuration which gets passed to mkdocs.
+        '';
       };
 
       # internal
@@ -131,7 +137,9 @@ in rec {
       docs = mkOption {
         type = types.attrsOf (types.submodule docsSubmodule);
         default = {};
-        description = "Specify multiple docs by specifying them in an attrset";
+        description = ''
+          Specify multiple docs by specifying them in an attrset.
+        '';
       };
 
       packages = mkOption {
