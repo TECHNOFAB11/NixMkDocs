@@ -20,8 +20,8 @@ in {
     };
   };
 
-  config.deps = p: optional (cfg.enable) p.mkdocs-macros;
-  config.config.plugins = optional (cfg.enable) {
+  config.deps = p: optional cfg.enable p.mkdocs-macros;
+  config.config.plugins = optional cfg.enable {
     macros.include_dir = cfg.includeDir;
   };
 }

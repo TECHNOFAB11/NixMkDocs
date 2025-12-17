@@ -24,7 +24,7 @@ in rec {
       path = mkOption {
         type = types.either types.str types.path;
         default = "";
-        apply = op: toString op;
+        apply = toString;
         description = ''
           Path to the docs.
         '';
@@ -32,14 +32,14 @@ in rec {
       base = mkOption {
         type = types.either types.str types.path;
         default = "";
-        apply = op: toString op;
+        apply = toString;
         description = ''
           Base path of the repo (parent dir of the dir specified in `path`).
         '';
       };
       deps = mkOption {
         type = types.functionTo (types.listOf types.package);
-        default = p: [];
+        default = _p: [];
         defaultText = literalExpression "p: []";
         description = ''
           Dependencies needed to build the docs.
@@ -65,7 +65,7 @@ in rec {
         in
           types.attrs
           // {
-            merge = loc: defs: lib.foldl' deepMerge {} (map (def: def.value) defs);
+            merge = _loc: defs: lib.foldl' deepMerge {} (map (def: def.value) defs);
           };
         default = {};
         description = ''
@@ -98,7 +98,7 @@ in rec {
     config = let
       deps = pkgs.python3.withPackages config.deps;
     in rec {
-      relPath = removePrefix (config.base) (config.path);
+      relPath = removePrefix config.base config.path;
       finalConfig = assert assertMsg (config.path != "") "'path' for documentation entry '${name}' is unset";
         {
           docs_dir = config.path;

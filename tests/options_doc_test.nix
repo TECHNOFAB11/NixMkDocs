@@ -1,4 +1,5 @@
 {
+  pkgs,
   doclib,
   ntlib,
   ...
@@ -17,7 +18,8 @@
           # sh
           ''
             ${ntlib.helpers.scriptHelpers}
-            assert_file_contains ${optionsDoc} "### `config`"
+            ${ntlib.helpers.path (with pkgs; [gnugrep])}
+            assert_file_contains ${optionsDoc} '### `config`'
             assert_file_contains ${optionsDoc} "/lib/module.nix"
           '';
       }
@@ -38,6 +40,7 @@
           # sh
           ''
             ${ntlib.helpers.scriptHelpers}
+            ${ntlib.helpers.path (with pkgs; [gnugrep])}
             assert_file_contains ${optionsDoc} "https://example.com/module.nix"
           '';
       }
