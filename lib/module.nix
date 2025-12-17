@@ -103,7 +103,7 @@ in rec {
       finalPackage = pkgs.runCommand "docs:${name}" {} ''
         export PYTHONPATH="${deps}/${deps.sitePackages}";
         mkdir -p $out
-        ${pkgs.mkdocs}/bin/mkdocs build -f ${config.finalConfigYaml} -d $out
+        ${pkgs.mkdocs}/bin/mkdocs build -f ${config.finalConfigYaml} -d $out $@
       '';
       watchPackage = pkgs.writeShellScriptBin "docs:${name}:watch" ''
         export PYTHONPATH="${deps}/${deps.sitePackages}";
@@ -120,7 +120,7 @@ in rec {
         tmp_config=$(mktemp)
         echo "{INHERIT: ${config.finalConfigYaml}, docs_dir: $doc_path}" > $tmp_config
         trap "rm -f $tmp_config" EXIT
-        ${pkgs.mkdocs}/bin/mkdocs serve -f $tmp_config
+        ${pkgs.mkdocs}/bin/mkdocs serve -f $tmp_config $@
       '';
     };
   };
