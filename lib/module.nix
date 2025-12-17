@@ -31,9 +31,8 @@ in rec {
       base = mkOption {
         type = types.either types.str types.path;
         default = "";
-        apply = toString;
         description = ''
-          Base path of the repo (parent dir of the dir specified in `path`).
+          Base path of the repo (often the parent dir of the dir specified in `path`).
         '';
       };
       deps = mkOption {
@@ -97,35 +96,40 @@ in rec {
     config = let
       deps = pkgs.python3.withPackages config.deps;
     in rec {
-      relPath = removePrefix config.base (builtins.toString config.path);
+      relPath = removePrefix (builtins.toString config.base) (builtins.toString config.path);
       finalConfig = assert assertMsg (config.path != "") "'path' for documentation entry '${name}' is unset";
         {
           docs_dir = config.path;
           site_name = name;
         }
         // config.config;
-      finalConfigYaml = (pkgs.formats.yaml {}).generate "${name}-config.yaml" config.finalConfig;
-      finalPackage = pkgs.runCommand "docs:${name}" {} ''
-        export PYTHONPATH="${deps}/${deps.sitePackages}";
-        mkdir -p $out
-        ${pkgs.mkdocs}/bin/mkdocs build -f ${config.finalConfigYaml} -d $out $@
-      '';
+      finalConfigYaml = (pkgs.formats.yaml {}).generate "${name}-config.yaml" finalConfig;
+      finalPackage = pkgs.stdenv.mkDerivation {
+        name = "docs:${name}";
+        PYTHONPATH = "${deps}/${deps.sitePackages}";
+        phases = ["buildPhase"];
+        buildInputs = [pkgs.mkdocs];
+        buildPhase = ''
+          mkdir -p $out
+          mkdocs build -f ${finalConfigYaml} -d $out
+        '';
+      };
       watchPackage = pkgs.writeShellScriptBin "docs:${name}:watch" ''
         export PYTHONPATH="${deps}/${deps.sitePackages}";
-        if [ ! -z "$DEVENV_ROOT" ]; then
-          doc_path="$DEVENV_ROOT${relPath}"
-          echo "DEVENV_ROOT detected, using absolute path ($doc_path)"
-        elif [ ! -z "$PRJ_ROOT" ]; then
-          doc_path="$PRJ_ROOT${relPath}"
-          echo "PRJ_ROOT detected, using absolute path ($doc_path)"
-        else
+
+        for root_var in REN_ROOT PRJ_ROOT DEVENV_ROOT; do
+          if [ ! -z "''${!root_var}" ]; then
+            doc_path="''${!root_var}${relPath}"
+            echo "$root_var detected, using absolute path ($doc_path)"
+            break
+          fi
+        done
+        if [ -z "$doc_path" ]; then
           doc_path="$PWD${relPath}"
           echo "Using relative path .${relPath} (=$doc_path), make sure you are in the project root"
         fi
-        tmp_config=$(mktemp)
-        echo "{INHERIT: ${config.finalConfigYaml}, docs_dir: $doc_path}" > $tmp_config
-        trap "rm -f $tmp_config" EXIT
-        ${pkgs.mkdocs}/bin/mkdocs serve -f $tmp_config $@
+
+        ${pkgs.mkdocs}/bin/mkdocs serve -f <(echo "{INHERIT: ${finalConfigYaml}, docs_dir: $doc_path}") "$@"
       '';
     };
   };
