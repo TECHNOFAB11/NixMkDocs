@@ -120,8 +120,8 @@ in rec {
           doc_path="$PRJ_ROOT${relPath}"
           echo "PRJ_ROOT detected, using absolute path ($doc_path)"
         else
-          doc_path=".${relPath}"
-          echo "Using relative path ($doc_path), make sure you are in the project root"
+          doc_path="$PWD${relPath}"
+          echo "Using relative path .${relPath} (=$doc_path), make sure you are in the project root"
         fi
         tmp_config=$(mktemp)
         echo "{INHERIT: ${config.finalConfigYaml}, docs_dir: $doc_path}" > $tmp_config

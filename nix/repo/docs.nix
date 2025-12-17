@@ -5,7 +5,7 @@
     module = doclib.modules.nixMkDocsSubmodule;
     roots = [
       {
-        url = "https://gitlab.com/TECHNOFAB/nix-mkdocs/-/blob/main/lib";
+        url = "https://gitlab.com/TECHNOFAB/nixmkdocs/-/blob/main/lib";
         path = "${inputs.self}/lib";
       }
     ];
