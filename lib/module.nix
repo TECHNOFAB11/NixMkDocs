@@ -128,8 +128,10 @@ in rec {
           doc_path="$PWD${relPath}"
           echo "Using relative path .${relPath} (=$doc_path), make sure you are in the project root"
         fi
-
-        ${pkgs.mkdocs}/bin/mkdocs serve -f <(echo "{INHERIT: ${finalConfigYaml}, docs_dir: $doc_path}") "$@"
+        tmp_config=$(mktemp)
+        echo "{INHERIT: ${finalConfigYaml}, docs_dir: $doc_path}" > $tmp_config
+        trap "rm -f $tmp_config" EXIT
+        ${pkgs.mkdocs}/bin/mkdocs serve -f $tmp_config $@
       '';
     };
   };
