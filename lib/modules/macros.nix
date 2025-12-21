@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types optional;
+  inherit (lib) mkEnableOption mkOption types optional optionals;
   cfg = config.macros;
 in {
   options.macros = {
@@ -18,10 +18,36 @@ in {
         only generated once when running the watcher).
       '';
     };
+    renderByDefault = mkOption {
+      type = types.bool;
+      default = true;
+      description = ''
+        Whether to render macros by default (opt-out per page) or not (opt-in per page).
+      '';
+    };
   };
 
-  config.deps = p: optional cfg.enable p.mkdocs-macros;
+  config.deps = p:
+    optionals cfg.enable [
+      p.mkdocs-macros
+      (p.buildPythonPackage {
+        pname = "nixmkdocs_helpers";
+        version = "latest";
+        doCheck = false;
+        dontUnpack = true;
+        format = "other";
+        src = ./macros_nixmkdocs_helpers.py;
+        installPhase = ''
+          mkdir -p $out/${p.python.sitePackages}/nixmkdocs_helpers
+          cp $src $out/${p.python.sitePackages}/nixmkdocs_helpers/__init__.py
+        '';
+      })
+    ];
   config.config.plugins = optional cfg.enable {
-    macros.include_dir = cfg.includeDir;
+    macros = {
+      include_dir = cfg.includeDir;
+      render_by_default = cfg.renderByDefault;
+      modules = ["nixmkdocs_helpers"];
+    };
   };
 }
