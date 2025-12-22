@@ -47,8 +47,8 @@ in
       config = {
         site_name = "NixMkDocs";
         site_url = "https://nix-mkdocs.projects.tf";
-        repo_name = "TECHNOFAB/nix-mkdocs";
-        repo_url = "https://gitlab.com/TECHNOFAB/nix-mkdocs";
+        repo_name = "TECHNOFAB/nixmkdocs";
+        repo_url = "https://gitlab.com/TECHNOFAB/nixmkdocs";
         extra_css = ["style.css"];
         theme = {
           logo = "images/logo.svg";
