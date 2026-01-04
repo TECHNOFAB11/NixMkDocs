@@ -1,6 +1,7 @@
 {
   inputs = {
     devshell-lib.url = "gitlab:rensa-nix/devshell?dir=lib";
+    devtools-lib.url = "gitlab:rensa-nix/devtools?dir=lib";
     nixtest-lib.url = "gitlab:TECHNOFAB/nixtest?dir=lib";
     soonix-lib.url = "gitlab:TECHNOFAB/soonix?dir=lib";
     nix-gitlab-ci-lib.url = "gitlab:TECHNOFAB/nix-gitlab-ci/3.1.2?dir=lib";
