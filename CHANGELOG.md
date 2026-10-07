@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v1.1.1](https://gitlab.com/TECHNOFAB/nixmkdocs/compare/0cd4a786194409623152a99571b7d5350fe9e4e0..v1.1.1) - 2026-10-07
+#### Bug Fixes
+- (**modules/umami**) fix accidental markdown link in pname - ([fc4a730](https://gitlab.com/TECHNOFAB/nixmkdocs/commit/fc4a730c813dabb86ec674a55260e8818d2a4159)) - TECHNOFAB
+#### Miscellaneous Chores
+- (**deps**) lock file maintenance - ([7c2dc3f](https://gitlab.com/TECHNOFAB/nixmkdocs/commit/7c2dc3fd8f6513031cfbfcac91c069d518d62a85)) - Renovate Bot
+- (**deps**) lock file maintenance - ([0cd4a78](https://gitlab.com/TECHNOFAB/nixmkdocs/commit/0cd4a786194409623152a99571b7d5350fe9e4e0)) - Renovate Bot
+- update flake inputs - ([3ce50f8](https://gitlab.com/TECHNOFAB/nixmkdocs/commit/3ce50f8e9eb4c191745e12b5549a95ba90e9b6b8)) - TECHNOFAB
+
+- - -
+
 ## [v1.1.0](https://gitlab.com/TECHNOFAB/nixmkdocs/compare/747d1ce04f56dcfe003bb64b8f654abc4f5c5f2a..v1.1.0) - 2026-01-04
 #### Features
 - (**macros**) extend options and add helper package to include files - ([9ac8c53](https://gitlab.com/TECHNOFAB/nixmkdocs/commit/9ac8c5345fea35fd8d191c6960fbdd88fafb55e9)) - [@TECHNOFAB](https://gitlab.com/TECHNOFAB)
