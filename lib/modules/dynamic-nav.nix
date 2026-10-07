@@ -15,7 +15,7 @@
   }:
     buildPythonPackage {
       pname = "mkdocs-dynamic-nav";
-      version = "unstablee";
+      version = "0.1.0";
       pyproject = true;
 
       src = fetchFromGitLab {
