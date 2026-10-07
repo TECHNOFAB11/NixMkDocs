@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v1.1.2](https://gitlab.com/TECHNOFAB/nixmkdocs/compare/dd09df557170f3904ce358ab54385f8ccaf32c88..v1.1.2) - 2026-10-07
+#### Bug Fixes
+- (**modules/dynamic-nav**) set version 0.1.0 so its valid - ([dd09df5](https://gitlab.com/TECHNOFAB/nixmkdocs/commit/dd09df557170f3904ce358ab54385f8ccaf32c88)) - TECHNOFAB
+
+- - -
+
 ## [v1.1.1](https://gitlab.com/TECHNOFAB/nixmkdocs/compare/0cd4a786194409623152a99571b7d5350fe9e4e0..v1.1.1) - 2026-10-07
 #### Bug Fixes
 - (**modules/umami**) fix accidental markdown link in pname - ([fc4a730](https://gitlab.com/TECHNOFAB/nixmkdocs/commit/fc4a730c813dabb86ec674a55260e8818d2a4159)) - TECHNOFAB
