@@ -6,6 +6,7 @@ in {
     ./material-umami.nix
     ./macros.nix
     ./dynamic-nav.nix
+    ./hooks.nix
   ];
 
   options.editBranch = mkOption {

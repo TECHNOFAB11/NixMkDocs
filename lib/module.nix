@@ -96,6 +96,7 @@ in rec {
     config = let
       deps = pkgs.python3.withPackages config.deps;
     in rec {
+      _module.args.pkgs = pkgs;
       relPath = removePrefix (builtins.toString config.base) (builtins.toString config.path);
       finalConfig = assert assertMsg (config.path != "") "'path' for documentation entry '${name}' is unset";
         {
